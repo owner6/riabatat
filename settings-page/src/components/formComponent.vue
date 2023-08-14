@@ -13,11 +13,11 @@
         <div class="grid grid-cols-2 gap-4">
           <label for="fromYear">Рік випуску: з</label>
           <div class="flex flex-col">
-            <YearSelector v-model="searchFromYear" />
+            <YearSelector v-model="selectedFromYear" />
           </div>
           <label for="toYear">Рік випуску: по</label>
           <div class="flex flex-col">
-            <YearSelector v-model="searchFromYear" />
+            <YearSelector v-model="selectedToYear" />
           </div>
 
           <label for="marka">Марка автомобіля:</label>
@@ -38,7 +38,7 @@
               <option
                 v-for="marka in filteredCarBrands"
                 :value="marka.name"
-                :key="marka.value"
+                :key="marka.name"
               >
                 {{ marka.name }}
               </option>
@@ -65,10 +65,16 @@
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 place-content-around h-12">
-          <button class="bg-blue-500 text-white px-4 py-2 mt-4 rounded">
+          <button
+            type="submit"
+            class="bg-blue-500 text-white px-4 py-2 mt-4 rounded"
+          >
             Сохранить
           </button>
-          <button class="bg-blue-500 text-white px-4 py-2 mt-4 rounded">
+          <button
+            type="reset"
+            class="bg-blue-500 text-white px-4 py-2 mt-4 rounded"
+          >
             Сбросить
           </button>
         </div>
@@ -92,11 +98,13 @@ export default {
     );
 
     return {
+      msg: "Привіт, шукачі автомобілів!",
+      selectedFromYear: "",
+      selectedToYear: "",
       carBrands: sortedCarBrands,
       searchMarka: "",
       selectedMarka: "",
-      selectedToYear: "",
-      selectedFromYear: "",
+      selectedModel: "",
     };
   },
   computed: {
@@ -116,16 +124,39 @@ export default {
       return carModels.filter((model) => model.marka === this.selectedMarka);
     },
   },
-  searchMarka() {
-    this.selectedMarka = "";
-  },
-
   methods: {
-    updateModels() {
-      this.selectedModel = "";
+    async submitForm() {
+      const formData = {
+        fromYear: this.selectedFromYear,
+        toYear: this.selectedToYear,
+        marka: this.selectedMarka,
+        model: this.selectedModel,
+      };
+      try {
+        const response = await fetch(
+          "https://sahcoppe1h.execute-api.eu-central-1.amazonaws.com/settings",
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
+
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log(responseData);
+        } else {
+          console.error("Failed to submit form data");
+        }
+        console.log(formData); // Move this line here
+      } catch (error) {
+        console.error("Error:", error);
+      }
     },
   },
 };
 </script>
 
-<style src="./app.css"></style>
+<style scoped></style>

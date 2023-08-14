@@ -14,6 +14,8 @@
   "homepage": "https://github.com/dever4eg/riabatat#readme",
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.358.0",
+    "@aws-sdk/lib-dynamodb": "^3.388.0",
+    "@aws-sdk/util-dynamodb": "^3.388.0",
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "vue-select": "^3.20.2"

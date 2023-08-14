@@ -21,6 +21,9 @@ provider:
       Resource:
         - "Fn::GetAtt": [UsersTable, Arn]
 
+  httpApi:
+    cors: true
+
   stage: dev
 
 plugins:
@@ -91,19 +94,12 @@ functions:
     environment:
       TELEGRAM_TOKEN: ${env:TELEGRAM_TOKEN}
 
-  settings-update:
-    handler: backend/handlers/settings-api.update
+  settings-api:
+    handler: backend/handlers/settings-api.handler
     events:
      - httpApi:
          path: /settings
          method: PATCH
-
-  get-settings:
-    handler: backend/handlers/get-settings.handler
-    events:
-      - httpApi:
-          path: /settings
-          method: GET
 
   car-finder:
     handler: backend/services//car-finder-service.handler
