@@ -84,6 +84,7 @@ functions:
      - httpApi:
          path: /users/create
          method: get
+         
 
   telegram-webhook:
     handler: backend/handlers/telegram-webhook.handler
@@ -94,12 +95,19 @@ functions:
     environment:
       TELEGRAM_TOKEN: ${env:TELEGRAM_TOKEN}
 
-  settings-api:
-    handler: backend/handlers/settings-api.handler
+  settings-save:
+    handler: backend/handlers/settings-save.handler
     events:
      - httpApi:
-         path: /settings
-         method: PATCH
+         path: /user/{id}/settings
+         method: PUT
+
+  settings-get:
+    handler: backend/handlers/settings-get.handler
+    events:
+     - httpApi:
+         path: /user/{id}/settings
+         method: GET
 
   car-finder:
     handler: backend/services//car-finder-service.handler
