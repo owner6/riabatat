@@ -95,8 +95,8 @@ functions:
     environment:
       TELEGRAM_TOKEN: ${env:TELEGRAM_TOKEN}
 
-  settings-save:
-    handler: backend/handlers/settings-save.handler
+  settings-api:
+    handler: backend/handlers/settings-api.handler
     events:
      - httpApi:
          path: /user/{id}/settings
