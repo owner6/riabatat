@@ -123,6 +123,9 @@ export default {
       }
       return carModels.filter((model) => model.marka === this.selectedMarka);
     },
+    userId() {
+      return this.$route.params.userId;
+    },
   },
   methods: {
     async submitForm() {
@@ -134,7 +137,7 @@ export default {
       };
       try {
         const response = await fetch(
-          "https://sahcoppe1h.execute-api.eu-central-1.amazonaws.com/settings",
+          `https://sahcoppe1h.execute-api.eu-central-1.amazonaws.com/${this.userId}`,
           {
             method: "PATCH",
             headers: {

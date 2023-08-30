@@ -13,7 +13,7 @@ export default {
   computed: {
     years() {
       const currentYear = new Date().getFullYear();
-      const startYear = 1900;
+      const startYear = 1935;
       return Array.from(
         { length: currentYear - startYear + 1 },
         (_, index) => currentYear - index
