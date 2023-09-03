@@ -8,7 +8,7 @@ module.exports.handler = async (event) => {
     const userId = event.pathParameters.userId;
     const requestBody = JSON.parse(event.body);
     const { fromYear, toYear, marka, model } = requestBody;
-
+console.log(requestBody)
     const params = {
       TableName: "riabatat-dev-users",
       Key: marshall({
