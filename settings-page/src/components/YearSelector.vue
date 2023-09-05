@@ -1,5 +1,9 @@
 <template>
-  <select class="border rounded px-3 py-2">
+  <select
+    v-model="selectedYear"
+    @change="selectYear"
+    class="border rounded px-3 py-2"
+  >
     <option value="">Виберіть рік</option>
     <option v-for="year in years" :value="year" :key="year">{{ year }}</option>
   </select>
@@ -7,17 +11,24 @@
 
 <script>
 export default {
-  props: {
-    selectedYear: String,
+  props: ["value"],
+  data() {
+    const currentYear = new Date().getFullYear();
+    const startYear = 1937;
+    const yearsArray = [];
+
+    for (let year = currentYear; year >= startYear; year--) {
+      yearsArray.push(year);
+    }
+
+    return {
+      selectedYear: this.value || "",
+      years: yearsArray,
+    };
   },
-  computed: {
-    years() {
-      const currentYear = new Date().getFullYear();
-      const startYear = 1900;
-      return Array.from(
-        { length: currentYear - startYear + 1 },
-        (_, index) => currentYear - index
-      );
+  methods: {
+    selectYear() {
+      this.$emit("input", this.selectedYear);
     },
   },
 };

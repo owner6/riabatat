@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 const carBrands = [
   { value: "3", name: "Renault" },
   { value: "4", name: "BMW" },
@@ -79,7 +78,7 @@ const carBrands = [
     name: "BMW-Alpina",
     value: 99,
   },
-   {
+  {
     name: "Bollinger",
     value: 6310,
   },
@@ -91,7 +90,7 @@ const carBrands = [
     name: "Buick",
     value: 1017,
   },
-   {
+  {
     name: "BYD",
     value: 386,
   },
