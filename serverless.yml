@@ -8,6 +8,9 @@ provider:
   runtime: nodejs18.x
   region: eu-central-1
 
+  httpApi:
+    cors: true # Додайте цей рядок для підтримки CORS на рівні HTTP API
+
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -20,9 +23,6 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         - "Fn::GetAtt": [UsersTable, Arn]
-
-  httpApi:
-    cors: true
 
   stage: dev
 
@@ -78,20 +78,13 @@ resources:
                  - /*
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-     - httpApi:
-         path: /users/create
-         method: get
          
-
   telegram-webhook:
     handler: backend/handlers/telegram-webhook.handler
     events:
      - httpApi:
          path: /telegram-webhook
-         method: POST
+         method: POST 
     environment:
       TELEGRAM_TOKEN: ${env:TELEGRAM_TOKEN}
 
@@ -100,15 +93,15 @@ functions:
     events:
      - httpApi:
          path: /user/{id}/settings
-         method: PUT
-
-  settings-get:
-    handler: backend/handlers/settings-get.handler
+         method: PATCH
+         
+  get-settings:
+    handler: backend/handlers/get-settings.handler
     events:
      - httpApi:
          path: /user/{id}/settings
          method: GET
-
+         
   car-finder:
     handler: backend/services//car-finder-service.handler
     events:
@@ -116,5 +109,3 @@ functions:
     environment:
       RIA_API_KEY: ${env:RIA_API_KEY}
       TELEGRAM_TOKEN: ${env:TELEGRAM_TOKEN}
-
-

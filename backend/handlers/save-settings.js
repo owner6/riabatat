@@ -5,10 +5,11 @@ const dynamoDB = new DynamoDBClient({ region: "eu-central-1" });
 
 module.exports.handler = async (event) => {
   try {
-    const userId = event.pathParameters.userId;
+    const userId = event.userId;
+    console.log(userId)
     const requestBody = JSON.parse(event.body);
     const { fromYear, toYear, marka, model } = requestBody;
-console.log(requestBody)
+  
     const params = {
       TableName: "riabatat-dev-users",
       Key: marshall({
@@ -35,11 +36,6 @@ console.log(requestBody)
 
     return {
       statusCode: 200,
-      headers: {
-      'Access-Control-Allow-Origin': 'http://riabatat-dev-settings-page.s3-website.eu-central-1.amazonaws.com',
-      'Access-Control-Allow-Methods': 'OPTIONS, POST, GET, PUT, DELETE',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
       body: JSON.stringify(
         {
           message: 'Settings saved successfully',

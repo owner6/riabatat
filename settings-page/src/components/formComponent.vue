@@ -134,7 +134,7 @@ export default {
       };
       try {
         const response = await fetch(
-          "https://sahcoppe1h.execute-api.eu-central-1.amazonaws.com/settings",
+          "https://sahcoppe1h.execute-api.eu-central-1.amazonaws.com/user/724b6ff3-2cf7-48ea-a6dc-eb4fcc1fbf8c/settings",
           {
             method: "PATCH",
             headers: {
